@@ -109,3 +109,29 @@ html,body{
     height: 25px;
     background-color: #888;
 }
+
+#experience{
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+    padding-top: 40px;
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+}
+
+.org{
+    width: 100%;
+    border-top: 1px solid #888; 
+    padding: 4vw 1vw;
+}
+
+.org h1{
+    text-transform: uppercase;
+    font-size: 6.5vw;
+    color: white;
+    opacity: 0.7;
+}
+
+.lastorg{
+    border-bottom: 1px solid #888; 
+}
