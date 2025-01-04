@@ -10,8 +10,27 @@ html,body{
     height: 100%;
 }
 
+#pointer-circle{
+    transition: cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    z-index: 99999;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.bound{
+    width: fit-content;
+    overflow: hidden;
+}
+
+.bound .bound-elem{
+    transform: translateY(100%);
+}
 #main{
     width: 100%;
+    background-color: black;
 }
 
 #hero{
@@ -19,6 +38,7 @@ html,body{
     height: 100vh;
     background-color: black;
     color: white;
+    position: relative;
 }
 
 #nav{
@@ -40,6 +60,9 @@ html,body{
 }
 
 .blocktext{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
     width: fit-content;
 }
 .blocktext h5{
@@ -64,12 +87,14 @@ html,body{
 #available{
   margin-top: 160px;
   padding-right: 50px;
+  display: flex;
+  align-items: right;
 }
+
 #available h5{
     text-transform: uppercase;
     margin-top: 10px;
     font-size: 1vw;
-    text-align: right;
 }
 
 #hero-footer{
@@ -116,10 +141,14 @@ html,body{
     padding-top: 40px;
     background-color: black;
     width: 100%;
-    height: 100vh;
+    height: fit-content;
 }
 
 .org{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     border-top: 1px solid #888; 
     padding: 4vw 1vw;
@@ -131,7 +160,100 @@ html,body{
     color: white;
     opacity: 0.7;
 }
-
+.org h5{
+    color: white;
+}
 .lastorg{
     border-bottom: 1px solid #888; 
 }
+
+.org img{
+    display: none;
+    height: 140%;
+    position: absolute;
+    z-index: 999;
+}
+
+#about{
+    width: 100%;
+    background-color: black;
+    padding: 17vw 5vw;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10vw 2vw 10vw 10vw;
+    gap: 4vw;
+}
+
+#about-img{
+    width: 225px;
+}
+
+#about-text{
+    color: white;
+    line-height: 1.6;
+    width: 500px
+}
+#about-text p{
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+#about-text h5{
+    opacity: 0.6;
+    font-size: 11px;
+}
+#about-text a{
+    background-color: black;
+    color: white;
+    padding: 6px 13px;
+    border: 1px solid white;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+#subscribe{
+    color: white;
+    padding: 20px 30px;
+    background-color: black;
+    padding-bottom: 7vw;
+}
+
+#subscribe h5{
+    text-transform: uppercase;
+    opacity: 0.6;
+    font-size: 11px;
+}
+
+#subscribe h3{
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+#footer {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 30px;
+    color: white;
+    background-color: black;
+}
+
+#footer-left{
+    display: flex;
+    gap: 20px;
+}
+
+#footer a{
+    color:white;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+}
+
+#footer-right{
+    display: flex;
+    gap: 20px;
+}
+
