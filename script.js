@@ -4,43 +4,35 @@ const scroll = new LocomotiveScroll({
 });
 
 var timeout;
-
 function flattenPointer() {
-    //scaleX and scaleY should be less than 1 to flatten in x or y
-    //define default scal evalue
-    var xScale = 1
-    var yScale = 1
+    let xScale = 1, yScale = 1;
+    let xPrev = 0, yPrev = 0;
 
-    var xPrev = 0;
-    var yPrev = 0;
-
-    window.addEventListener('mousemove', function(dets){
+    window.addEventListener('mousemove', function(dets) {
         clearTimeout(timeout);
-        var xDiff = dets.clientX - xPrev;
-        var yDiff = dets.clientY - yPrev
+
+        const xDiff = dets.clientX - xPrev;
+        const yDiff = dets.clientY - yPrev;
+
+        xScale = gsap.utils.clamp(0.8, 1.2, Math.abs(xDiff) / 10);
+        yScale = gsap.utils.clamp(0.8, 1.2, Math.abs(yDiff) / 10);
+
+        xPrev = dets.clientX;
+        yPrev = dets.clientY;
+
+        const pointer = document.querySelector('#pointer-circle');
+        pointer.style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(${xScale}, ${yScale})`;
+
+        timeout = setTimeout(() => {
+            pointer.style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(1, 1)`;
+            xScale = 1;
+            yScale = 1;
+        }, 100);
+
        
-        // to convert scale between 0.8 and 1.2 use gsap.utils.clamp()
-        
-        xScale = gsap.utils.clamp(0.8,1.2, xDiff)
-        yScale = gsap.utils.clamp(0.8,1.2, yDiff)
-
-        xPrev = dets.clientX
-        yPrev = dets.clientY
-
-        pointerFollower(xScale, yScale);
-        timeout = setTimeout(function(){
-             document.querySelector('#pointer-circle').style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(1,1)`
-             xScale = 1
-             yScale = 1
-        }, 100)
     });
 }
-function pointerFollower(xScale, yScale) {
-    window.addEventListener("mousemove", function(dets) {
-        document.querySelector('#pointer-circle').style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(${xScale}, ${yScale})`
 
-    })
-}
 
 function heroAnimation() {
     var tl = gsap.timeline();
@@ -69,6 +61,37 @@ function heroAnimation() {
     })
 }
 
-pointerFollower();
+document.querySelectorAll(".org")
+.forEach(function (elem){
+    var rotate = 0;
+    var diffRot = 0;
+    elem.addEventListener("mousemove", function(dets){
+        
+        var imgDist = dets.clientY - elem.getBoundingClientRect().top
+        diffRot = dets.clientX - rotate;
+        rotate = dets.clientX;
+        
+       
+        gsap.to(elem.querySelector("img"),{
+            opacity: 1,
+            ease:Power3,  // for smoothness
+            top: imgDist - 130,
+            left: dets.clientX,
+            rotate:  gsap.utils.clamp(-20,20,diffRot*0.4),
+
+        })
+      
+    })
+
+    elem.addEventListener("mouseleave", function(dets){
+        gsap.to(elem.querySelector("img"),{
+            opacity: 0,
+            ease:Power3,  // for smoothness
+        })
+      
+    })
+});
+
 heroAnimation();
 flattenPointer();
+flattenPointer2();
