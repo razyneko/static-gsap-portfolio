@@ -7,12 +7,19 @@ var timeout;
 function flattenPointer() {
     let xScale = 1, yScale = 1;
     let xPrev = 0, yPrev = 0;
+    let lastTime = performance.now()
 
     window.addEventListener('mousemove', function(dets) {
         clearTimeout(timeout);
 
+        const currentTime = performance.now()
+        const timeDiff = currentTime - lastTime;
+        lastTime = currentTime;
+
         const xDiff = dets.clientX - xPrev;
         const yDiff = dets.clientY - yPrev;
+
+        const speed = Math.sqrt(xDiff*xDiff + yDiff*yDiff) / timeDiff;
 
         xScale = gsap.utils.clamp(0.8, 1.2, Math.abs(xDiff) / 10);
         yScale = gsap.utils.clamp(0.8, 1.2, Math.abs(yDiff) / 10);
@@ -23,6 +30,16 @@ function flattenPointer() {
         const pointer = document.querySelector('#pointer-circle');
         pointer.style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(${xScale}, ${yScale})`;
 
+        const distanceToTop = dets.clientY;
+        const opacityThreshold = 10;
+        const speedFactor = 3;
+        const adjustedOpacity = gsap.utils.clamp(0, 1, 1 - (speed * speedFactor) - (opacityThreshold - distanceToTop) / opacityThreshold);
+
+       gsap.to(pointer, {
+            opacity: adjustedOpacity,
+            ease: Power3.easeOut, // For smoothness
+        });
+        
         timeout = setTimeout(() => {
             pointer.style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(1, 1)`;
             xScale = 1;
@@ -94,4 +111,3 @@ document.querySelectorAll(".org")
 
 heroAnimation();
 flattenPointer();
-flattenPointer2();
